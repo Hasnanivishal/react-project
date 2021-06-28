@@ -1,18 +1,11 @@
 import { Component } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { register, getAll } from "../api-service/axios-config";
+import { register, validateEmail } from "../api-service/axios-config";
 import * as Yup from 'yup';
+import { Link } from 'react-router-dom';
 
-// - API call linking for both register ::: Done
-// - Routing for login and register page ::: Working
-// - Login Page Creation with useFormik approach & API integration
-
-// Registration Page using Formik
+// Formik using Class component
 class Register extends Component {
-
-    componentDidMount() {
-        getAll();
-    }
     render() {
         return (
             <div className="card m-3">
@@ -20,13 +13,13 @@ class Register extends Component {
                 <div className="card-body">
                     <Formik
                         initialValues={{
-                            title: 'Mr',
-                            firstName: 'A',
-                            lastName: 'B',
+                            title: '',
+                            firstName: '',
+                            lastName: '',
                             email: '',
-                            password: '123456',
-                            confirmPassword: '123456',
-                            acceptTerms: true
+                            password: '',
+                            confirmPassword: '',
+                            acceptTerms: false
                         }}
                         validationSchema={Yup.object().shape({
                             title: Yup.string()
@@ -42,13 +35,14 @@ class Register extends Component {
                                 // async validation
                                 function(value){
                                     return new Promise((resolve, reject) => {
-                                    setTimeout(()=> {
-                                        resolve(true)
-                                    })
+                                        validateEmail(value).then((res) => {
+                                            console.log(res);
+                                            resolve(res);
+                                        });
                                 })}
                             ),
                             password: Yup.string()
-                                .min(6, 'Password must be at least 6 characters')
+                                .min(3, 'Password must be at least 3 characters')
                                 .required('Password is required'),
                             confirmPassword: Yup.string()
                                 .oneOf([Yup.ref('password'), null], 'Passwords must match')
@@ -58,8 +52,8 @@ class Register extends Component {
                         })}
                         onSubmit={async (fields, { setSubmitting }) => {
                             const response = await register(fields);
-                            console.log(response);
                             setSubmitting(false);
+                            this.props.history.push("/login");
                         }}
                      >
                         {({ errors, touched, isSubmitting }) => (
@@ -117,6 +111,9 @@ class Register extends Component {
                                     >
                                     {isSubmitting ? "Please wait..." : "Submit"}
                                     </button>
+                                </div>
+                                <div>
+                                    Already having an Account?<Link to="/login"> Click to login</Link>
                                 </div>
                             </Form>
                         )}
