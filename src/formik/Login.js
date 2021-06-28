@@ -19,7 +19,7 @@ function Login(props) {
                 let res = await login(values);
                 setSubmitting(false);
                 if (res) {
-                    props.history.push("/");
+                    props.history.push("/home");
                 }
             }
     });

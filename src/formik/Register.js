@@ -38,7 +38,7 @@ class Register extends Component {
                                         validateEmail(value).then((res) => {
                                             console.log(res);
                                             resolve(res);
-                                        });
+                                        }).catch(resolve(false));
                                 })}
                             ),
                             password: Yup.string()

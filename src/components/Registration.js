@@ -1,4 +1,5 @@
-import { Component } from "react";
+import React, { Component, createRef } from "react";
+import { ThemeContext } from "../context/theme";
 import Button from "../controls/button";
 import Input from "../controls/input";
 import Label from "../controls/label";
@@ -11,10 +12,12 @@ class Resgistration extends Component {
             name : '',
             password : ''
         }
+        this.ref = React.createRef();
     }
+    static contextType = ThemeContext;
 
     submitForm = () => {
-        console.log('submit is called...', this.state);
+        console.log('submit is called...', this.ref.current.outerHTML);
     }
 
     setData = (event) => {
@@ -44,9 +47,9 @@ class Resgistration extends Component {
                     name="password"/>
             </div>
             <div>
-                <Button name="Register" buttonEvent={this.submitForm}/>
+                <Button name="Register" ref={this.ref} theme={this.context} buttonEvent={this.submitForm}/>
             </div>
-        </div>;
+        </div>
     }
 }
 

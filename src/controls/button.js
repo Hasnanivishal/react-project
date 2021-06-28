@@ -1,7 +1,16 @@
-function Button(props) {
+import { ThemeContext } from "../context/theme";
+import React from "react";
+
+const Button = React.forwardRef((props, ref) => {
     return (
-        <button onClick={props.buttonEvent}>{props.name}</button>
+        <ThemeContext.Consumer>
+            {
+                theme => (
+                    <button ref={ref} onClick={props.buttonEvent}>{props.name}+{props.theme}+{theme}</button>
+                )
+            }
+        </ThemeContext.Consumer>
     );
-}
+});
 
 export default Button;

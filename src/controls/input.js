@@ -1,3 +1,5 @@
+import logComp from "../HOC/LogComp";
+
 function Input(props) {
     return (
         <input type={props.type} 
@@ -9,4 +11,4 @@ function Input(props) {
     );
 }
 
-export default Input;
+export default logComp(Input);
