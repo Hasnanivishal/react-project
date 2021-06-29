@@ -7,10 +7,13 @@ export const register = async (data) => {
 };
 
 //Login
-export const login = async (data) => {
-  let res = await getAll();
-  let user = res.filter(f=> f.email === data.email && f.password === data.password);
-  return user.length > 0;
+export const login = (data) => {
+  new Promise((resolve, reject) => {
+    instance.get(`users`).then(res => {
+    let user = res.filter(f=> f.email === data.email && f.password === data.password);
+    resolve(user.length > 0)
+    }).catch(resolve(false));
+  });
 }
 
 //Get All Users

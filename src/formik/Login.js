@@ -1,11 +1,12 @@
 import { useFormik } from "formik";
+import { useState } from "react";
 import { Link , Redirect} from "react-router-dom";
 import * as Yup from "yup";
 import { login } from "../api-service/axios-config";
 
 // Formik for Functional Component
 function Login(props) {
-
+    const [err, setErr] = useState(false);
     const formik = useFormik({
             initialValues: {
                 email: '',
@@ -15,12 +16,17 @@ function Login(props) {
                 email: Yup.string().email('Invalid email address').required('Required'),
                 password: Yup.string().min(3, 'Password must be at least 3 characters').required('Required')
             }),
-            onSubmit: async (values, {setSubmitting}) => {
-                let res = await login(values);
+            onSubmit: (values, {setSubmitting}) => {
+                let res = login(values);
                 setSubmitting(false);
                 if (res) {
                     props.history.push("/home");
+                } else {
+                    setErr(true);
                 }
+            },
+            validate: (values) => {
+                setErr(false);
             }
     });
 
@@ -28,6 +34,7 @@ function Login(props) {
         <div className="card m-3">
             <h5 className="card-header">Login Form</h5>
                 <div className="card-body">
+                    <div style={{color: 'red'}}>{err && <p>Something Went Wrong!!!!</p>}</div>
                     <form onSubmit={formik.handleSubmit}>
                             <div className="form-group">
                                 <label htmlFor="email">Email</label>
