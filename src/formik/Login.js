@@ -1,12 +1,14 @@
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Link , Redirect} from "react-router-dom";
 import * as Yup from "yup";
 import { login } from "../api-service/axios-config";
 
 // Formik for Functional Component
 function Login(props) {
+    //useState Hook
     const [err, setErr] = useState(false);
+    const [pageTittle, setPageTittle] = useState("");
     const formik = useFormik({
             initialValues: {
                 email: '',
@@ -30,9 +32,19 @@ function Login(props) {
             }
     });
 
+    // Runs on load of page i.e. Component did mount
+    useEffect(()=> {
+        setPageTittle("Login Page");
+    }, []);
+
+    // called when prop Err changes
+    useEffect(()=> {
+        document.title = err ? "Opps Login Failed!!" : "Welcome to Login Page!!" 
+    }, [err]);
+
     return (
         <div className="card m-3">
-            <h5 className="card-header">Login Form</h5>
+            <h5 className="card-header">{pageTittle}</h5>
                 <div className="card-body">
                     <div style={{color: 'red'}}>{err && <p>Something Went Wrong!!!!</p>}</div>
                     <form onSubmit={formik.handleSubmit}>
