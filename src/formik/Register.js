@@ -3,6 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import { register, validateEmail } from "../api-service/axios-config";
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
 
 // Formik using Class component
 class Register extends Component {
@@ -34,11 +35,10 @@ class Register extends Component {
                                 .test('Unique Email','Email already in use', 
                                 // async validation
                                 function(value){
-                                    return new Promise((resolve, reject) => {
+                                    return new Promise((resolve) => {
                                         validateEmail(value).then((res) => {
-                                            console.log(res);
                                             resolve(res);
-                                        }).catch(resolve(false));
+                                        }).catch(() => resolve(false));
                                 })}
                             ),
                             password: Yup.string()
@@ -53,6 +53,7 @@ class Register extends Component {
                         onSubmit={async (fields, { setSubmitting }) => {
                             const response = await register(fields);
                             setSubmitting(false);
+                            this.props.onFormSubmit(fields.email, fields.password);
                             this.props.history.push("/login");
                         }}
                      >
@@ -124,4 +125,20 @@ class Register extends Component {
     };
 }
 
-export default Register;
+const mapStateToProps = (state) => {
+    return {
+        email : state.email,
+        password: state.password
+    }
+}; 
+
+const mapDispachToProps = (dispatch) => {
+    return {
+        onFormSubmit: (email, password) => dispatch({type: 'UPPDATE_LOGIN', payload: {
+            email: email,
+            password: password
+        }})
+    }
+};
+
+export default connect(mapStateToProps, mapDispachToProps)(Register);

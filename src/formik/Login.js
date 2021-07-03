@@ -3,23 +3,27 @@ import { useEffect, useState } from "react";
 import { Link , Redirect} from "react-router-dom";
 import * as Yup from "yup";
 import { login } from "../api-service/axios-config";
+import { useSelector } from 'react-redux';
 
 // Formik for Functional Component
 function Login(props) {
     //useState Hook
     const [err, setErr] = useState(false);
-    const [pageTittle, setPageTittle] = useState("");
+    const [pageTittle, setPageTittle] = useState('');
+    const emailValue = useSelector((state)=> state.email);
+    const passwordValue = useSelector((state)=> state.password);
+
     const formik = useFormik({
             initialValues: {
-                email: '',
-                password: ''
+                email: emailValue,
+                password: passwordValue
             },
             validationSchema: Yup.object({
                 email: Yup.string().email('Invalid email address').required('Required'),
                 password: Yup.string().min(3, 'Password must be at least 3 characters').required('Required')
             }),
-            onSubmit: (values, {setSubmitting}) => {
-                let res = login(values);
+            onSubmit: async (values, {setSubmitting}) => {
+                let res = await login(values);
                 setSubmitting(false);
                 if (res) {
                     props.history.push("/home");
