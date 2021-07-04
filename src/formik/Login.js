@@ -1,6 +1,6 @@
 import { useFormik } from "formik";
 import { useEffect, useState } from "react";
-import { Link , Redirect} from "react-router-dom";
+import { Link , Redirect, useLocation} from "react-router-dom";
 import * as Yup from "yup";
 import { login } from "../api-service/axios-config";
 import { useSelector, useDispatch } from 'react-redux';
@@ -13,6 +13,7 @@ function Login(props) {
     const emailValue = useSelector((state)=> state.email);
     const passwordValue = useSelector((state)=> state.password);
     const dispatch = useDispatch();
+    const location = useLocation();
 
     const formik = useFormik({
             initialValues: {
@@ -55,6 +56,7 @@ function Login(props) {
         <div className="card m-3">
             <h5 className="card-header">{pageTittle}</h5>
                 <div className="card-body">
+                    <h6>{location.state.data}</h6>
                     <div style={{color: 'red'}}>{err && <p>Something Went Wrong!!!!</p>}</div>
                     <form onSubmit={formik.handleSubmit}>
                             <div className="form-group">
