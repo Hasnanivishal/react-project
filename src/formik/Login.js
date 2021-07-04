@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { Link , Redirect} from "react-router-dom";
 import * as Yup from "yup";
 import { login } from "../api-service/axios-config";
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 
 // Formik for Functional Component
 function Login(props) {
@@ -12,6 +12,7 @@ function Login(props) {
     const [pageTittle, setPageTittle] = useState('');
     const emailValue = useSelector((state)=> state.email);
     const passwordValue = useSelector((state)=> state.password);
+    const dispatch = useDispatch();
 
     const formik = useFormik({
             initialValues: {
@@ -30,6 +31,10 @@ function Login(props) {
                 } else {
                     setErr(true);
                 }
+                dispatch({
+                    type: 'UPDATE_EMAIL',
+                    value: values.email
+                });
             },
             validate: (values) => {
                 setErr(false);

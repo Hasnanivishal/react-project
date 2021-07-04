@@ -1,6 +1,7 @@
 const initialState = {
     email: '',
-    password: ''
+    password: '',
+    users: []
 };
 
 const reducer = (state =  initialState, action) => {
@@ -11,6 +12,12 @@ const reducer = (state =  initialState, action) => {
     }
     if (action.type === 'UPPDATE_LOGIN') {
         return {...action.payload};
+    }
+    if (action.type === 'LOAD_USERS') {
+        return {
+            ...state,
+            users: action.users
+        }
     }
 
     return newState;

@@ -20,8 +20,7 @@ export const getAll = async () => {
 };
 
 // Email Validation
-export const validateEmail = async (email) => {
-  let res = await getAll();
-  let user = res.filter(f=> f.email === email);
+export const validateEmail = async (users, email) => {
+  let user = users.filter(f=> f.email === email);
   return user.length === 0;
 }

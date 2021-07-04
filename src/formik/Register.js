@@ -4,9 +4,16 @@ import { register, validateEmail } from "../api-service/axios-config";
 import * as Yup from 'yup';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import { getAll } from "../api-service/axios-config";
 
 // Formik using Class component
 class Register extends Component {
+
+    // On Load get all users and save to store
+    componentDidMount() {
+        this.props.onFormLoad();
+    }
+
     render() {
         return (
             <div className="card m-3">
@@ -17,7 +24,7 @@ class Register extends Component {
                             title: '',
                             firstName: '',
                             lastName: '',
-                            email: '',
+                            email: this.props.email,
                             password: '',
                             confirmPassword: '',
                             acceptTerms: false
@@ -34,9 +41,9 @@ class Register extends Component {
                                 .required('Email is required')
                                 .test('Unique Email','Email already in use', 
                                 // async validation
-                                function(value){
+                                (value) => {
                                     return new Promise((resolve) => {
-                                        validateEmail(value).then((res) => {
+                                        validateEmail(this.props.users, value).then((res) => {
                                             resolve(res);
                                         }).catch(() => resolve(false));
                                 })}
@@ -125,15 +132,35 @@ class Register extends Component {
     };
 }
 
+const getUserDataForStore = () => {
+    return dispatch => {
+        getAll().then((res)=> {
+            dispatch({
+                type: 'LOAD_USERS',
+                users: res
+            });
+        }).catch((err) => {
+            console.error(err);
+            dispatch({
+                type: 'LOAD_USERS',
+                users: []
+            });
+        });
+    }
+}
+
 const mapStateToProps = (state) => {
     return {
         email : state.email,
-        password: state.password
+        password: state.password,
+        users: state.users
     }
 }; 
 
 const mapDispachToProps = (dispatch) => {
     return {
+        // pass a function in dispatch
+        onFormLoad: () =>  dispatch(getUserDataForStore()),
         onFormSubmit: (email, password) => dispatch({type: 'UPPDATE_LOGIN', payload: {
             email: email,
             password: password
