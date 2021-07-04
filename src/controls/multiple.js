@@ -6,11 +6,11 @@ const Multiple = {
     },
     ListRender: function ListRender(props) {
         return (
-            <ul>
+            <Fragment>
                 {
                     props.data.map((d)=> <li key={d.id}>{d.name}</li>)
                 }
-            </ul>
+            </Fragment>
         );
     },
     ChildRender: function ChildRender(props){

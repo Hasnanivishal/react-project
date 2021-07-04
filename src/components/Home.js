@@ -1,15 +1,24 @@
 import React, { Component, Suspense } from "react";
 import Multiple from "../controls/multiple";
-
+import Label from "../controls/label";
 // Lazy loading of a component
 const LazyLodadedLabel = React.lazy(()=> import("../controls/label"));
 
 class Home extends Component {
     constructor(props) {
         super(props);
+
+        this.state = {
+          val: 1
+        }
     }
 
     componentDidMount(){
+      setInterval(() => {
+        this.setState({
+          val: 1
+        });
+      }, 2000000000);
     }
 
     render(){
@@ -58,6 +67,8 @@ class Home extends Component {
               <Multiple.ChildRender>
                 <Multiple.ListRender data={[{id:1, name: 'vishal'}]}/>
               </Multiple.ChildRender>
+
+              <Label value={this.state.val}/>
             </div>
         );
     }

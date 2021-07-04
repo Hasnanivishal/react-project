@@ -7,6 +7,7 @@ import Resgistration from './components/Registration';
 import Home from './components/Home';
 import React from 'react';
 import { ThemeContext } from './context/theme';
+import About from './components/About';
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
           <Route path="/register" render={()=> <Resgistration theme="Red"/>}/>
           <Route path="/login" component={Login}/>
           <Route path="/home" component={Home} />
+          <Route path="/about" component={About} />
         </Switch>
       </Router>
     </ThemeContext.Provider>
