@@ -28,6 +28,8 @@ function Login(props) {
                 let res = await login(values);
                 setSubmitting(false);
                 if (res) {
+                    localStorage.setItem('userInfo', JSON.stringify(values));
+                    dispatch({ type: "USER", payload: values });
                     props.history.push("/home");
                 } else {
                     setErr(true);

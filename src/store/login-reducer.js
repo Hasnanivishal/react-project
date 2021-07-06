@@ -4,7 +4,7 @@ const initialState = {
     users: []
 };
 
-const reducer = (state =  initialState, action) => {
+const loginReducer = (state =  initialState, action) => {
     const newState = {...state};
 
     if (action.type === 'UPDATE_EMAIL') {
@@ -23,4 +23,4 @@ const reducer = (state =  initialState, action) => {
     return newState;
 }
 
-export default reducer;
+export default loginReducer;

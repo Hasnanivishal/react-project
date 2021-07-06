@@ -121,7 +121,15 @@ class Register extends Component {
                                     </button>
                                 </div>
                                 <div>
-                                    Already having an Account?<Link to="/login"> Click to login</Link>
+                                    Already having an Account?
+                                    <Link  to={
+                                        {
+                                        pathname: "/login",
+                                        state: {
+                                            data: "App Page"
+                                        }
+                                        }
+                                    }> Click Here to Login</Link>
                                 </div>
                             </Form>
                         )}
