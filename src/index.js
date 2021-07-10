@@ -7,11 +7,13 @@ import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import loginReducer from './store/login-reducer';
 import userReducer from './store/user-reducer';
+import todoReducer from './store/todo-reducer';
 import thunk from 'redux-thunk';
 
 const rootReducer = combineReducers({
 	login: loginReducer,
-	user: userReducer
+	user: userReducer,
+  todos: todoReducer
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));

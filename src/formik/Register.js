@@ -159,9 +159,9 @@ const getUserDataForStore = () => {
 
 const mapStateToProps = (state) => {
     return {
-        email : state.email,
-        password: state.password,
-        users: state.users
+        email: state.login.email,
+        password: state.login.password,
+        users: state.login.users
     }
 }; 
 

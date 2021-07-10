@@ -10,8 +10,8 @@ function Login(props) {
     //useState Hook
     const [err, setErr] = useState(false);
     const [pageTittle, setPageTittle] = useState('');
-    const emailValue = useSelector((state)=> state.email);
-    const passwordValue = useSelector((state)=> state.password);
+    const emailValue = useSelector((state)=> state.login.email);
+    const passwordValue = useSelector((state)=> state.login.password);
     const dispatch = useDispatch();
     const location = useLocation();
 

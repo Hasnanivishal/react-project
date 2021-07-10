@@ -24,3 +24,14 @@ export const validateEmail = async (users, email) => {
   let user = users.filter(f=> f.email === email);
   return user.length === 0;
 }
+
+export const getAllTodos = async () => {
+  let res = await instance.get(`todos`);
+  return res.data;
+}
+
+export const addNewTodo = async (todo) => {
+  let res = await instance.post(`todos`, todo);
+  return res.data;
+}
+

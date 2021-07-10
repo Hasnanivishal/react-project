@@ -10,6 +10,9 @@ import About from './components/About';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import { useDispatch } from 'react-redux';
+import AuthorizedLink from './routing/AuthorizedLink';
+import UnAuthorizedLink from './routing/UnAuthorizedLink';
+import TodoList from './components/TodoList';
 
 function App() {
   const user = JSON.parse(localStorage.getItem('userInfo'));
@@ -26,17 +29,18 @@ function App() {
         <Header />
         <div className="content-box">
           <Switch>
-              <Route exact path="/" component={Register}/>
-              <Route path="/register" render={()=> <Resgistration theme="Red"/>}/>
-              <Route path="/login" component={Login}/> 
-              <Route path="/home" component={Home} />
-              <Route path="/about/:name" component={About} />
-            </Switch>
+              <UnAuthorizedLink exact path="/" component={Register}></UnAuthorizedLink>
+              <UnAuthorizedLink path="/register" component={Resgistration}></UnAuthorizedLink>
+              <UnAuthorizedLink path="/login" component={Login} ></UnAuthorizedLink>
+              <AuthorizedLink path="/home" component={Home} ></AuthorizedLink>
+              <AuthorizedLink path="/about/:name" component={About}></AuthorizedLink>
+              <AuthorizedLink path="/todo" component={TodoList}></AuthorizedLink>
+          </Switch>
           <Footer />
         </div>
       </div>
           
-        </Router>
+      </Router>
     </ThemeContext.Provider>
 
     // <div className="App">

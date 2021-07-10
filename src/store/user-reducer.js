@@ -5,6 +5,7 @@ const userReducer = (state = initialState, action) => {
         return action.payload;
     } 
     if (action.type === 'CLEAR') {
+        localStorage.clear();
         return initialState;
     }
 

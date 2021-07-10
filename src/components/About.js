@@ -19,7 +19,7 @@ function About({match}) {
 
     return (
         <>
-            <h1> About Page {match.params.name} and from hook {name}</h1>
+            <h1> About Page {match?.params?.name} and from hook {name}</h1>
             <span>value of I is: {i}</span>
             <input value={data} onChange={()=> setData(data+1)}></input>
             <button onClick={()=> setData(data+1)}

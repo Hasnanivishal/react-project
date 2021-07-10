@@ -18,5 +18,13 @@
       "acceptTerms": true,
       "id": 2
     }
+  ],
+  "todos": [
+    {
+      "id": 1,
+      "text": "todo",
+      "completed": true,
+      "otherInfo": "NA"
+    }
   ]
 }
